@@ -50,14 +50,14 @@ public:
     }
 
 // Mandatory Tasks
-    void insertAtHead() {
+    void insertAtHead(value) {
         
         Node<T>* newNode<T>(value);
         
         if (headNode == nullptr)
         {
             headNode = newNode; // If the list is empty, the newNode becomes the headNode
-            newNode ->nextNode = headNode; // The new node points to self, since it is circular and the only node in the list.
+            newNode -> nextNode = headNode; // The new node points to self, since it is circular and the only node in the list.
         } else {
             newNode -> nextNode = headNode; // The new node points to the old headNode.
             Node<T>* temp = headNode; // Store the  headNode's address in a tmpPtr
@@ -73,8 +73,25 @@ public:
     }
 
 
-    void insertAtTail() {
-        cout<<"Insert at Tail unwritten"<<endl;
+    void insertAtTail(value) {
+        
+        Node<T>* newNode = new Node<T>(value);
+        
+        if(headNode == nullptr)
+        {
+            headNode = newNode;
+            newNode -> nextNode = headNode;
+        }else {
+            Node<T>* temp = headNode; // Store the  headNode's address in a tmpPtr
+            while( temp -> nextNode != headNode)
+            {
+                temp = temp -> nextNode;
+            }
+            temp -> nextNode = newNode;
+            newNode -> nextNode = headNode;
+            
+        }
+        cout<<"Inserted at Tail"<<endl;
     }
 
     void insertAtPosition() {
