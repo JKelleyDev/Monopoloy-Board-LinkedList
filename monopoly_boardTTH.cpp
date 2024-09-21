@@ -69,7 +69,7 @@ public:
             headNode = newNode; // newNode becomes new headnode
             
         }
-        cout<<"Inserted at head"<<endl;
+        cout<<"Inserted at head: "<< value <<endl;
     }
 
 
@@ -91,11 +91,32 @@ public:
             newNode -> nextNode = headNode;
             
         }
-        cout<<"Inserted at Tail"<<endl;
+        cout<<"Inserted at Tail: "<< value <<endl;
     }
 
-    void insertAtPosition() {
-        cout<<"Insert at Position unwritten"<<endl;
+    void insertAtPosition(T value, T position) {
+        Node<T>* newNode = new Node<T>(value);
+        
+        if( headNode == nullptr)
+        {
+            headNode = newNode;
+            newNode -> nextNode = headNode;
+            
+        }else {
+            Node<T>* temp = headNode;
+            
+            do {
+                if(temp -> data == positionValue)
+                {
+                    newNode -> nextNode = temp -> nextNode;
+                    temp -> nextNode = newNode;
+                    cout<<"Inserted " << value << "at Position: " << position <<endl;
+                    break;
+                }
+                temp = temp -> nextNode;
+            } while (temp != headNode);
+            
+        cout<< "Position value " << position << " not found. Insertion failed" <<endl;
     }
     void deleteAtHead() {
         cout<<"Delete at head unwritten"<<endl;
