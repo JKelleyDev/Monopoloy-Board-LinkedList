@@ -51,7 +51,25 @@ public:
 
 // Mandatory Tasks
     void insertAtHead() {
-        cout<<"Insert at head unwritten"<<endl;
+        
+        Node<T>* newNode<T>(value);
+        
+        if (headNode == nullptr)
+        {
+            headNode = newNode; // If the list is empty, the newNode becomes the headNode
+            newNode ->nextNode = headNode; // The new node points to self, since it is circular and the only node in the list.
+        } else {
+            newNode -> nextNode = headNode; // The new node points to the old headNode.
+            Node<T>* temp = headNode; // Store the  headNode's address in a tmpPtr
+            while( temp -> nextNode != headNode)
+            {
+                temp = temp -> nextNode;
+            }
+            temp -> nextNode = newNode; // Tail now points to the new headNode
+            headNode = newNode; // newNode becomes new headnode
+            
+        }
+        cout<<"Inserted at head"<<endl;
     }
 
 
