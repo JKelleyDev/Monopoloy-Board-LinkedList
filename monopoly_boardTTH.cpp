@@ -50,7 +50,7 @@ public:
     }
 
 // Mandatory Tasks
-    void insertAtHead(value) {
+    void insertAtHead(T value) {
         
         Node<T>* newNode<T>(value);
         
@@ -73,7 +73,7 @@ public:
     }
 
 
-    void insertAtTail(value) {
+    void insertAtTail(T value) {
         
         Node<T>* newNode = new Node<T>(value);
         
