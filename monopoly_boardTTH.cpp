@@ -37,6 +37,7 @@ public:
     }
 
 
+
     void print() {
         cout << "Property Information:" << endl;
         cout << "  Property Name:   "   << propertyName  << endl;
@@ -140,25 +141,126 @@ public:
     }
         
         void deleteAtHead() {
-            cout<<"Delete at head unwritten"<<endl;
+            
+            if(headNode == nullptr){
+                cout << " The list is empty, cannot delete at head." << endl;
+                return;
+            }
+            
+            if(headNode -> nextNode == headNode){
+                delete headNode;
+                headNode = nullptr;
+                cout << "Head node was the only node. Head node deleted and the list is now empty." << endl;
+                return;
+            }
+            
+            Node<T>* temp = headNode;
+            Node<T>* tempForDelete = headNode;
+            
+            while(temp -> nextNode != headNode) // Find the last node of the list
+            {
+                temp = temp -> nextNode;
+            }
+            // Point tail to second node, then change headnode to second node
+            temp -> nextNode = headNode -> nextNode;
+            headNode = headNode -> nextNode;
+            // Delete the old headnode.
+            delete tempForDelete;
+        
+            cout << "Head node deleted." << endl;
         }
         
         
         void deleteAtTail() {
-            cout<<"Delete at Tail unwritten"<<endl;
-        }
-        
-        void deleteAtPosition() {
-            cout<<"Delete at Position unwritten"<<endl;
-        }
-        
-        
-        void search(T value) {
             
-            cout<<"Search unwritten"<<endl;
+            if(headNode == nullptr){
+                cout << " The list is empty, cannot delete at tail." << endl;
+                return;
+            }
+            
+            if(headNode -> nextNode == headNode){
+                delete headNode;
+                headNode = nullptr;
+                cout << "Only one node in list, node deleted. List is now empty." << endl;
+                return;
+            }
+            
+            Node<T>* temp = headNode;
+            
+            //First find the tail node
+            while(temp -> nextNode != headNode)
+            {
+                temp = temp -> nextNode;
+            }
+            
+            //Store the node for delete
+            Node<T>* tail = temp;
+            
+            //Find the node before tail
+            while(temp -> nextNode != tail)
+            {
+                temp = temp -> nextNode;
+            }
+            
+            // Make the second to last node the new tail and delete old tail
+            temp -> nextNode = headNode;
+            delete tail;
+        
+            cout << "Deleted at Tail." << endl;
+        }
+        
+        void deleteAtPosition(T position) {
+            Node<T>* tempPosition = search(position);
+            if(tempPosition == nullptr)
+            {
+                cout << "Property cannot be found, no deletion made." << endl;
+                return;
+            }else if(tempPosition == headNode)
+            {
+                deleteAtHead();
+
+            }else{
+                Node<T>* beforeTemp = headNode;
+                while(beforeTemp -> nextNode != tempPosition)
+                {
+                    beforeTemp = beforeTemp -> nextNode;
+                }
+                beforeTemp -> nextNode = tempPosition -> nextNode;
+                delete tempPosition;
+            }
+            cout<<"Deleted at Position."<<endl;
+        }
+        
+        
+        Node<T>* search(T value){
+            Node<T>* temp = headNode;
+            do {
+                if(temp -> data == value)
+                {
+                    return temp;
+                }
+                temp = temp -> nextNode;
+            } while (temp -> nextNode != headNode);
+            
+            cout<< "Search Conducted, position not found position" <<endl;
+            return nullptr;
         }
         void printList() {
-            cout << "Print List unwritten" << endl;
+            Node<T>* temp = headNode;
+            int counter = 0;
+            if(headNode == nullptr)
+            {
+                cout << "List is empty" << endl;
+                return;
+            }
+            do {
+                cout << "     Item: " << counter << endl;
+                cout << "------------------------------" << endl;
+                (temp -> data).print();
+                cout << "------------------------------" << endl;
+                temp = temp -> nextNode;
+                counter++;
+            } while (temp != headNode);
         }
         
         //Optional Tasks
@@ -197,21 +299,25 @@ public:
         // Create a LinkedList of Data objects
         CircularLinkedList<MonopolyBoard> list;
         
+        MonopolyBoard* spot1 = new MonopolyBoard("A Street", "White", 1254, 120000);
+        MonopolyBoard* spot2 = new MonopolyBoard("B Street", "Green", 1123, 155000);
+        
         // Insert elements at the end
-        list.insertAtHead(MonopolyBoard("House", "green", 122, 324));
+        list.insertAtHead(*spot1);
         
-     //   list.insertAtTail(20);
-        
-    //    list.insertAtPosition(22);
-        
-   /*     list.deleteAtHead();
+        list.insertAtTail(*spot2);
+
+        //list.insertAtPosition();
+      
+        list.deleteAtHead();
         
         list.deleteAtTail();
         
-        list.deleteAtPosition();
+        list.printList();
+    //    list.deleteAtPosition();
         
         //Optional Basic Tasks
-        
+   /*
         list.reverseCLList();
         list.sortCLList();
         list.printHeadNode();
