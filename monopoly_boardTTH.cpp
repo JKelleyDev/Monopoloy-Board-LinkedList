@@ -30,14 +30,19 @@ public:
 
 
     bool isEqual(MonopolyBoard other) {
-        /*Define is equal here*/
-        return false;
+        return(propertyName == other.propertyName &&
+               propertyColor == other.propertyColor &&
+               value == other.value &&
+               rent == other.rent);
     }
 
 
     void print() {
-        /*Define Print Here*/
-        cout << "Print not yet defined" << endl;
+        cout << "Property Information:" << endl;
+        cout << "  Property Name:   "   << propertyName  << endl;
+        cout << "  Property Color:  "   << propertyColor << endl;
+        cout << "  Property Value: $"   << value         << endl;
+        cout << "  Property Rent:  $"   << rent          << endl;
     }
 };
 
