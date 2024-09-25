@@ -41,11 +41,9 @@ public:
 
 
     void print() {
-        cout << "Property Information:" << endl;
-        cout << "  Property Name:   "   << propertyName  << endl;
-        cout << "  Property Color:  "   << propertyColor << endl;
-        cout << "  Property Value: $"   << value         << endl;
-        cout << "  Property Rent:  $"   << rent          << endl;
+        cout << propertyName << endl;
+        cout << "Color: " << propertyColor << endl;
+        cout << "Value $" << value << " | Rent $" << rent << endl;
     }
 };
 
@@ -94,9 +92,7 @@ public:
             }
             temp -> nextNode = newNode; // Tail now points to the new headNode
             headNode = newNode; // newNode becomes new headnode
-            
         }
-        cout<<"Inserted at head:" <<endl;
     }
     
     
@@ -118,7 +114,6 @@ public:
             newNode -> nextNode = headNode;
             
         }
-        cout<< "Inserted at Tail:" << endl;
     }
     
     void insertAtPosition(T value, T position) {
@@ -134,7 +129,6 @@ public:
                 {
                     newNode -> nextNode = temp -> nextNode;
                     temp -> nextNode = newNode;
-                    cout << "Inserted at Position:" << endl;
                     return;
                 }
                 temp = temp -> nextNode;
@@ -169,8 +163,6 @@ public:
             headNode = headNode -> nextNode;
             // Delete the old headnode.
             delete tempForDelete;
-        
-            cout << "Head node deleted." << endl;
         }
         
         
@@ -208,8 +200,6 @@ public:
             // Make the second to last node the new tail and delete old tail
             temp -> nextNode = headNode;
             delete tail;
-        
-            cout << "Deleted at Tail." << endl;
         }
         
         void deleteAtPosition(T position) {
@@ -231,14 +221,13 @@ public:
                 beforeTemp -> nextNode = tempPosition -> nextNode;
                 delete tempPosition;
             }
-            cout<<"Deleted at Position."<<endl;
         }
         
         
         Node<T>* search(T value){
             Node<T>* temp = headNode;
             do {
-                if(temp -> data == value)
+                if((temp -> data).isEqual(value))
                 {
                     return temp;
                 }
@@ -250,20 +239,17 @@ public:
         }
         void printList() {
             Node<T>* temp = headNode;
-            int counter = 0;
             if(isListEmpty()){
                 cout << "List is empty" << endl;
                 return;
             }
             do {
-                cout << "     Item: " << counter << endl;
-                cout << "------------------------------" << endl;
+                cout << "----------------------------" << endl;
                 (temp -> data).print();
-                cout << "------------------------------" << endl;
                 temp = temp -> nextNode;
-                counter++;
-                sleepTime(300);
+                sleepTime(200);
             } while (temp != headNode);
+            cout << "----------------------------" << endl;
         }
         
         //Optional Tasks
@@ -312,25 +298,30 @@ public:
         }
     
         void displaySpecificColorNode() {
-            cout << "Display Specific color Node" << endl;
+            cout << "Display Specific color Node Unwritten" << endl;
         } void mergeCLList() {
             cout << "Merge Circular Linked List Unwritten" << endl;
         }
         
     };
 
-    void sleepTime(int time)
-    {
-        std::this_thread::sleep_for(std::chrono::milliseconds(time));
-    }
+        void sleepTime(int time)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(time));
+        }
+
 
     // Main function to demonstrate the LinkedList class
     int main() {
+        
+        // Sends command to the system to clear the terminal for clean output
+        system("clear");
+        
         // Create a LinkedList of Data objects
         CircularLinkedList<MonopolyBoard> list;
         
+        // Create each node to be used and store inside a vector for easy access
         std::vector<MonopolyBoard> spots;
-
         spots.push_back(MonopolyBoard("Mediterranean Avenue", "Brown", 30, 2));
         spots.push_back(MonopolyBoard("Baltic Avenue", "Brown", 30, 4));
         spots.push_back(MonopolyBoard("St.James Place", "Orange", 90, 14));
@@ -354,7 +345,7 @@ public:
         spots.push_back(MonopolyBoard("Park Place", "Dark Blue", 1123, 155000));
         spots.push_back(MonopolyBoard("Boardwalk", "Dark Blue", 1123, 155000));
         
-    
+        // Inserts all of the items into the linkedlist. Inserting each at the tail
         cout << "Initializing List..." << endl;
         sleepTime(1200);
         for(int i = 0; i < spots.size(); i++)
@@ -364,27 +355,17 @@ public:
         }
 
 
-     
-    
-        
-        
-        
-        // Insert elements at the end
-     //   list.insertAtHead();
-        
-  //      list.insertAtTail();
-
-        //list.insertAtPosition();
+        // Insert Core Functions
+        list.insertAtHead(spots[1]);
+        list.insertAtTail(spots[1]);
+        list.insertAtPosition(spots[3], spots[2]);
       
+        // Deletion Core Functions
         list.deleteAtHead();
-        
         list.deleteAtTail();
-        
-        list.printList();
-    //    list.deleteAtPosition();
+        list.deleteAtPosition(spots[5]);
         
         //Optional Basic Tasks
-   /*
         list.reverseCLList();
         list.sortCLList();
         list.printHeadNode();
@@ -394,11 +375,27 @@ public:
         
         //Optional Advanced Tasks
         list.convertCLList();
-        list.updateNodeValue();
+        list.updateNodeValue(spots[1], spots[2]);
         list.displaySpecificColorNode();
         list.mergeCLList();
-    */
-        return 0;
+    
         
+        //Prints a quick and easy to read checklist for TA to grade
+        cout << "                     " << endl
+             << "---------------------" << endl
+             << "Completion CheckList:" << endl
+             << "---------------------" << endl
+             << "   Core Functions    " << endl
+             << "[Y] insertAtHead     " << endl
+             << "[Y] insertAtTail     " << endl
+             << "[Y] insertAtPosition " << endl
+             << "[Y] deleteAtHead     " << endl
+             << "[Y] deleteAtTail     " << endl
+             << "[Y] deleteATPosition " << endl
+             << "[Y] search           " << endl
+             << "[Y] printList        " << endl;
+        
+        
+        return 0;
     }
 
