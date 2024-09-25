@@ -13,7 +13,9 @@ public:
     int value;
     int rent;
 
-    //default constructor
+    /**
+        Purpose: Creates an object with default of no values
+     */
     MonopolyBoard()
     {
         propertyName = "";
@@ -22,6 +24,13 @@ public:
         rent = 0;
     }
     
+    /**
+        Purpose: Creates an object with passed in values
+        @Param Property's Name
+        @Param Property's Color
+        @Param Property's Value
+        @Param Property's Rent
+     */
     //Overload constructor
     MonopolyBoard(string propertyName,string propertyColor,int value, int rent){
         this->propertyName = propertyName;
@@ -30,7 +39,11 @@ public:
         this->rent = rent;
     }
 
-
+    /**
+        Purpose: Checks if two board objects variables are the same
+        @param Another board object
+        @Return true, if both boards are the same. false, if the boards are different
+     */
     bool isEqual(MonopolyBoard other) {
         return(propertyName == other.propertyName &&
                propertyColor == other.propertyColor &&
@@ -38,12 +51,20 @@ public:
                rent == other.rent);
     }
 
+    string getColor()
+    {
+        return propertyColor;
+    }
 
-
+    /**
+        Purpose: Prints the board object's variables to the console
+     */
     void print() {
-        cout << propertyName << endl;
-        cout << "Color: " << propertyColor << endl;
-        cout << "Value $" << value << " | Rent $" << rent << endl;
+        cout << propertyName << endl
+             << "Color: " << propertyColor << endl
+             << "Value $" << value << " | Rent $" << rent << endl
+             << " " << endl;
+             
     }
 };
 
@@ -69,45 +90,59 @@ public:
         headNode = nullptr;
     }
     
+    /**
+        Purpose: creates a sleep function to be used to make the terminal output more astetic
+        @param some value of time in milliseconds (ms)
+     */
     void sleepTime(int time)
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(time));
     }
     
-    // Mandatory Tasks
+    /**
+        Purpose: Creates a new node with passed in data value and prepends to the beginning of linked list
+        @param some data value of type "T"
+     */
     void insertAtHead(T value) {
         
         Node<T>* newNode = new Node<T>(value);
         
         if (isListEmpty())
         {
-            headNode = newNode; // If the list is empty, the newNode becomes the headNode
-            newNode -> nextNode = headNode; // The new node points to self, since it is circular and the only node in the list.
+            // If the list is empty, the newNode becomes the headNode
+            headNode = newNode;
+            newNode -> nextNode = headNode;
         } else {
-            newNode -> nextNode = headNode; // The new node points to the old headNode.
-            Node<T>* temp = headNode; // Store the  headNode's address in a tmpPtr
+            // The new node points to the old headNode and will become new head.
+            newNode -> nextNode = headNode;
+            // Store the  headNode's address in a tmpPtr
+            Node<T>* temp = headNode;
+            // Retrieve the tail node's pointer
             while( temp -> nextNode != headNode)
             {
                 temp = temp -> nextNode;
             }
-            temp -> nextNode = newNode; // Tail now points to the new headNode
-            headNode = newNode; // newNode becomes new headnode
+            // Point the tail to the new headNode
+            temp -> nextNode = newNode;
+            // Assign the newNode as the headnode.
+            headNode = newNode;
         }
     }
     
-    
+    /**
+        Purpose: Creates a new node with passed in data value and appends to the end of linked list
+        @param some data value of type "T"
+     */
     void insertAtTail(T value) {
         
         Node<T>* newNode = new Node<T>(value);
         
-        if(isListEmpty())
-        {
+        if(isListEmpty()){
             headNode = newNode;
             newNode -> nextNode = headNode;
         }else {
             Node<T>* temp = headNode; // Store the  headNode's address in a tmpPtr
-            while( temp -> nextNode != headNode)
-            {
+            while( temp -> nextNode != headNode){
                 temp = temp -> nextNode;
             }
             temp -> nextNode = newNode;
@@ -116,6 +151,11 @@ public:
         }
     }
     
+    /**
+        Purpose: Creates a new node with passed in data value and appends after position given
+        @param some object value of type "T
+        @param some other object value to be reference as the position
+     */
     void insertAtPosition(T value, T position) {
         Node<T>* newNode = new Node<T>(value);
         
@@ -137,120 +177,120 @@ public:
         }
     }
         
-        void deleteAtHead() {
+    void deleteAtHead() {
             
-            if(isListEmpty()){
-                cout << "List is empty" << endl;
-                return;
+        if(isListEmpty()){
+            cout << "List is empty" << endl;
+            return;
+        }
+            
+        if(headNode -> nextNode == headNode){
+            delete headNode;
+            headNode = nullptr;
+            cout << "Head node was the only node. Head node deleted and the list is now empty." << endl;
+            return;
+        }
+            
+        Node<T>* temp = headNode;
+        Node<T>* tempForDelete = headNode;
+            
+        while(temp -> nextNode != headNode) // Find the last node of the list
+        {
+            temp = temp -> nextNode;
+        }
+        // Point tail to second node, then change headnode to second node
+        temp -> nextNode = headNode -> nextNode;
+        headNode = headNode -> nextNode;
+        // Delete the old headnode.
+        delete tempForDelete;
+    }
+        
+        
+    void deleteAtTail() {
+            
+        if(isListEmpty()){
+            cout << "List is empty" << endl;
+            return;
+        }
+            
+        if(headNode -> nextNode == headNode){
+            delete headNode;
+            headNode = nullptr;
+            cout << "Only one node in list, node deleted. List is now empty." << endl;
+            return;
+        }
+            
+        Node<T>* temp = headNode;
+            
+        //First find the tail node
+        while(temp -> nextNode != headNode){
+            temp = temp -> nextNode;
+        }
+            
+        //Store the node for delete
+        Node<T>* tail = temp;
+            
+        //Find the node before tail
+        while(temp -> nextNode != tail){
+            temp = temp -> nextNode;
+        }
+            
+        // Make the second to last node the new tail and delete old tail
+        temp -> nextNode = headNode;
+        delete tail;
+    }
+        
+    void deleteAtPosition(T position) {
+        Node<T>* tempPosition = search(position);
+        if(tempPosition == nullptr){
+            cout << "Property cannot be found, no deletion made." << endl;
+            return;
+        }else if(tempPosition == headNode){
+            deleteAtHead();
+        }else{
+            Node<T>* beforeTemp = headNode;
+            while(beforeTemp -> nextNode != tempPosition){
+                beforeTemp = beforeTemp -> nextNode;
             }
-            
-            if(headNode -> nextNode == headNode){
-                delete headNode;
-                headNode = nullptr;
-                cout << "Head node was the only node. Head node deleted and the list is now empty." << endl;
-                return;
-            }
-            
-            Node<T>* temp = headNode;
-            Node<T>* tempForDelete = headNode;
-            
-            while(temp -> nextNode != headNode) // Find the last node of the list
+            beforeTemp -> nextNode = tempPosition -> nextNode;
+            delete tempPosition;
+        }
+    }
+        
+        
+    Node<T>* search(T value){
+        
+        Node<T>* temp = headNode;
+        
+        do {
+            if((temp -> data).isEqual(value))
             {
-                temp = temp -> nextNode;
+                return temp;
             }
-            // Point tail to second node, then change headnode to second node
-            temp -> nextNode = headNode -> nextNode;
-            headNode = headNode -> nextNode;
-            // Delete the old headnode.
-            delete tempForDelete;
+            temp = temp -> nextNode;
+        } while (temp -> nextNode != headNode);
+            
+        cout<< "Search Conducted, position not found position" <<endl;
+        return nullptr;
+    }
+    
+    void printList() {
+        Node<T>* temp = headNode;
+        
+        if(isListEmpty()){
+            cout << "List is empty" << endl;
+            return;
         }
         
-        
-        void deleteAtTail() {
-            
-            if(isListEmpty()){
-                cout << "List is empty" << endl;
-                return;
-            }
-            
-            if(headNode -> nextNode == headNode){
-                delete headNode;
-                headNode = nullptr;
-                cout << "Only one node in list, node deleted. List is now empty." << endl;
-                return;
-            }
-            
-            Node<T>* temp = headNode;
-            
-            //First find the tail node
-            while(temp -> nextNode != headNode)
-            {
-                temp = temp -> nextNode;
-            }
-            
-            //Store the node for delete
-            Node<T>* tail = temp;
-            
-            //Find the node before tail
-            while(temp -> nextNode != tail)
-            {
-                temp = temp -> nextNode;
-            }
-            
-            // Make the second to last node the new tail and delete old tail
-            temp -> nextNode = headNode;
-            delete tail;
-        }
-        
-        void deleteAtPosition(T position) {
-            Node<T>* tempPosition = search(position);
-            if(tempPosition == nullptr)
-            {
-                cout << "Property cannot be found, no deletion made." << endl;
-                return;
-            }else if(tempPosition == headNode)
-            {
-                deleteAtHead();
-
-            }else{
-                Node<T>* beforeTemp = headNode;
-                while(beforeTemp -> nextNode != tempPosition)
-                {
-                    beforeTemp = beforeTemp -> nextNode;
-                }
-                beforeTemp -> nextNode = tempPosition -> nextNode;
-                delete tempPosition;
-            }
-        }
-        
-        
-        Node<T>* search(T value){
-            Node<T>* temp = headNode;
-            do {
-                if((temp -> data).isEqual(value))
-                {
-                    return temp;
-                }
-                temp = temp -> nextNode;
-            } while (temp -> nextNode != headNode);
-            
-            cout<< "Search Conducted, position not found position" <<endl;
-            return nullptr;
-        }
-        void printList() {
-            Node<T>* temp = headNode;
-            if(isListEmpty()){
-                cout << "List is empty" << endl;
-                return;
-            }
-            do {
-                cout << "----------------------------" << endl;
-                (temp -> data).print();
-                temp = temp -> nextNode;
-                sleepTime(200);
-            } while (temp != headNode);
+        do {
             cout << "----------------------------" << endl;
-        }
+            (temp -> data).print();
+            temp = temp -> nextNode;
+            sleepTime(200);
+        } while (temp != headNode);
+        
+        cout << "----------------------------" << endl;
+    }
         
         //Optional Tasks
         //Basic Funtions
@@ -258,11 +298,31 @@ public:
             cout << "Reverse List unwritten" << endl;
         } void sortCLList() {
             cout << "Sort List unwritten" << endl;
-        } void printHeadNode() {
-            cout << "Print Head Node unwritten" << endl;
-        } void printLastNode() {
-            cout << "Print Last Node unwritten" << endl;
         }
+    
+    void printHeadNode() {
+        if(isListEmpty())
+        {
+            cout << "List empty." << endl;
+            return;
+        }
+        (headNode -> data).print();
+    }
+    
+    void printLastNode() {
+        
+        if(isListEmpty())
+        {
+            cout << "List empty." << endl;
+            return;
+        }
+        
+        Node<T>* temp = headNode;
+        while(temp -> nextNode != headNode){
+            temp = temp -> nextNode;
+        }
+        (temp -> data).print();
+    }
     
         bool isListEmpty() {
             return(headNode == nullptr);
@@ -297,9 +357,28 @@ public:
             }
         }
     
-        void displaySpecificColorNode() {
-            cout << "Display Specific color Node Unwritten" << endl;
-        } void mergeCLList() {
+    void displaySpecificColorNode(string color) {
+            
+        if(isListEmpty())
+        {
+            cout << "List empty." << endl;
+            return;
+        }else{
+            Node<T>* temp = headNode;
+            cout << "-----------------------------" << endl
+                 << "Printing all " << color << " properties" << endl
+                 << "-----------------------------" << endl;
+            do{
+                if((temp -> data).getColor() == color)
+                {
+                    (temp -> data).print();
+                }
+                temp = temp -> nextNode;
+            }while( temp != headNode);
+        }
+    }
+    
+    void mergeCLList() {
             cout << "Merge Circular Linked List Unwritten" << endl;
         }
         
@@ -347,13 +426,12 @@ public:
         
         // Inserts all of the items into the linkedlist. Inserting each at the tail
         cout << "Initializing List..." << endl;
-        sleepTime(1200);
+        sleepTime(200);
         for(int i = 0; i < spots.size(); i++)
         {
             list.insertAtTail(spots[i]);
-            sleepTime(100);
+            sleepTime(50);
         }
-
 
         // Insert Core Functions
         list.insertAtHead(spots[1]);
@@ -376,16 +454,18 @@ public:
         //Optional Advanced Tasks
         list.convertCLList();
         list.updateNodeValue(spots[1], spots[2]);
-        list.displaySpecificColorNode();
+        list.displaySpecificColorNode("Pink");
         list.mergeCLList();
     
         
         //Prints a quick and easy to read checklist for TA to grade
+        int printTime = 500;
         cout << "                     " << endl
              << "---------------------" << endl
              << "Completion CheckList:" << endl
-             << "---------------------" << endl
-             << "   Core Functions    " << endl
+             << "---------------------" << endl;
+        sleepTime(printTime);
+        cout << "   Core Functions    " << endl
              << "[Y] insertAtHead     " << endl
              << "[Y] insertAtTail     " << endl
              << "[Y] insertAtPosition " << endl
@@ -393,8 +473,30 @@ public:
              << "[Y] deleteAtTail     " << endl
              << "[Y] deleteATPosition " << endl
              << "[Y] search           " << endl
-             << "[Y] printList        " << endl;
-        
+             << "[Y] printList        " << endl
+             << "                     " << endl;
+        sleepTime(printTime);
+        cout << "   Basic Functions   " << endl
+             << "[N] reverseCLList    " << endl
+             << "[N] sortCLList       " << endl
+             << "[Y] printHeadNode    " << endl
+             << "[Y] printLastNode    " << endl
+             << "[Y] isListEmpty      " << endl
+             << "[Y] countNodes       " << endl
+             << "                     " << endl;
+        sleepTime(printTime);
+        cout << "  Advanced Functions " << endl
+             << "[N] reverseCLList    " << endl
+             << "[Y] updateNodeVaue   " << endl
+             << "[Y] displaySpecficColorNode   " << endl
+             << "[N] mergeCLList      " << endl;
+        sleepTime(printTime);
+        cout << "                     " << endl
+             << "  Extra Credit       " << endl
+             << "EC{1}:               " << endl
+             << "EC{2}:               " << endl
+             << "EC{3}:               " << endl
+             << "EC{4}:               " << endl;
         
         return 0;
     }
