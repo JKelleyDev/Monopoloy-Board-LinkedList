@@ -28,3 +28,17 @@ Time Complexity:
 Best case: O([best case time complexity])
 Worst case: O([worst case time complexity])
 List all Operations implemented in your project using the above format.
+
+2. Name of Operation
+Description: [Briefly describe how operation is performed in your code.]
+Time Complexity:
+Best case: O([best case time complexity])
+Worst case: O([worst case time complexity])
+List all Operations implemented in your project using the above format.
+
+3. Name of Operation
+Description: [Briefly describe how operation is performed in your code.]
+Time Complexity:
+Best case: O([best case time complexity])
+Worst case: O([worst case time complexity])
+List all Operations implemented in your project using the above format.
