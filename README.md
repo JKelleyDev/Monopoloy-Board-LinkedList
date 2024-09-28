@@ -22,11 +22,11 @@ executed from your local terminal.
     :./filename.exe
   
 ## Operations
-1. Name of Operation
-Description: [Briefly describe how operation is performed in your code.]
+1. insertAtHead
+Description: This method creates a new node and inserts at the beginning of the list.
 Time Complexity:
-Best case: O([best case time complexity])
-Worst case: O([worst case time complexity])
+Best case: O([1)
+Worst case: O(N)
 List all Operations implemented in your project using the above format.
 
 2. Name of Operation
