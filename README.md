@@ -12,7 +12,7 @@ executed from your local terminal.
 
   [Windows](https://learn.microsoft.com/en-us/cpp/build/walkthrough-compiling-a-native-cpp-program-on-the-command-line?view=msvc-170) 
 
-### Instructions
+### Instructions 
 - Open up your local terminal and change to the directory with your file.cpp
 - Next execute the compile command
     :g++ filepath/filename.cpp -o filename.exe
@@ -27,12 +27,12 @@ Best case: O([N)
 Worst case: O(N)
 List all Operations implemented in your project using the above format.
 
-3. **insertAtTail**
-Description: This method creates a new node and inserts at the ned of the tail.
-Time Complexity:
-Best case: O(N)
-Worst case: O(N)
-List all Operations implemented in your project using the above format.
+3. **insertAtTail**<br/>
+Description: This method creates a new node and inserts at the ned of the tail.<br/>
+Time Complexity:<br/>
+Best case: O(N)<br/>
+Worst case: O(N)<br/>
+List all Operations implemented in your project using the above format.<br/>
 
 4. **insertAtPosition**
 Description: This method create a new node and inserts directly after the position found by searching the list for the position passed in by the method call. 
