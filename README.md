@@ -23,22 +23,62 @@ executed from your local terminal.
   
 ## Operations
 1. insertAtHead
-Description: This method creates a new node and inserts at the beginning of the list.
+Description: This method creates a new node and inserts at the beginning of the list. The method must traverse the entire list to find the tail node to update the next pointer. 
 Time Complexity:
-Best case: O([1)
+Best case: O([N)
 Worst case: O(N)
 List all Operations implemented in your project using the above format.
 
-2. Name of Operation
-Description: [Briefly describe how operation is performed in your code.]
+2. insertAtTail
+Description: This method creates a new node and inserts at the ned of the tail.
 Time Complexity:
-Best case: O([best case time complexity])
-Worst case: O([worst case time complexity])
+Best case: O(N)
+Worst case: O(N)
 List all Operations implemented in your project using the above format.
 
-3. Name of Operation
-Description: [Briefly describe how operation is performed in your code.]
-Time Complexity:
-Best case: O([best case time complexity])
-Worst case: O([worst case time complexity])
+3. insertAtPosition
+Description: This method create a new node and inserts directly after the position found by searching the list for the position passed in by the method call. 
+Time Complexity: 
+Best case: O(N)
+Worst case: O(N)
 List all Operations implemented in your project using the above format.
+
+4. deleteAtHead
+Description: This method goes through the list to find the tail node to update it's next pointer to the new headNode, then deletes the old headNode.
+Time Complexity: 
+Best case: O(N)
+Worst case: O(N)
+List all Operations implemented in your project using the above format.
+
+5. deleteAtTail
+Description: This method travereses the list and finds the tail node, reassigns the preceeding node as the new tail, then deletes the existing node.
+Time Complexity: 
+Best case: O(N)
+Worst case: O(N)
+List all Operations implemented in your project using the above format.
+
+5. deleteAtPosition
+Description: This method travereses the list and finds the position to delete, reassigns the preceedings Node's next pointer, then deletes the positioned Node. 
+Time Complexity: 
+Best case: O(N)
+Worst case: O(N)
+List all Operations implemented in your project using the above format.
+
+6. search
+Description: This method travereses the list and finds the node associated with the value passed into the method call. 
+Time Complexity: 
+Best case: O(N)
+Worst case: O(N)
+List all Operations implemented in your project using the above format.
+
+7. printList()
+Description: This method loops through the list and prints each node's data values. 
+Time Complexity: 
+Best case: O(N)
+Worst case: O(N)
+List all Operations implemented in your project using the above format.
+
+
+
+
+
