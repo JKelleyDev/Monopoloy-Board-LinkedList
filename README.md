@@ -21,7 +21,7 @@ executed from your local terminal.
   
 ## Operations
 1. **insertAtHead**
-   Description: This method creates a new node and inserts at the beginning of the list. The method must traverse the entire list to find the tail node to update the next pointer. 
+Description: This method creates a new node and inserts at the beginning of the list. The method must traverse the entire list to find the tail node to update the next pointer. 
 Time Complexity:
 Best case: O([N)
 Worst case: O(N)
