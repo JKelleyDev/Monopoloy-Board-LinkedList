@@ -69,7 +69,7 @@ Best case: O(N)<br/>
 Worst case: O(N)<br/>
 List all Operations implemented in your project using the above format.<br/>
 
-7. **printList()**<br/>
+7. **printList**<br/>
 Description: This method loops through the list and prints each node's data values.<br/> 
 **Time Complexity:** <br/> 
 Best case: O(N)<br/>
