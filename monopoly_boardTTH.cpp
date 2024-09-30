@@ -752,7 +752,7 @@ void testDisplaySpecificColorNode() {
     list.insertAtTail(board3);
     
     cout << "                               " << endl;
-    cout << "    Verify test visually" << endl;
+    cout << "Verify test visually..." << endl;
     cout << "Expected: Park Place, Boardwalk" << endl;
     list.displaySpecificColorNode("Dark Blue");  // Output should be checked manually
 
