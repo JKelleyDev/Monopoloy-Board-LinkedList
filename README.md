@@ -25,56 +25,56 @@ Description: This method creates a new node and inserts at the beginning of the 
 **Time Complexity:** <br/>
 Best case: O(N)<br/>
 Worst case: O(N)<br/>
-List all Operations implemented in your project using the above format.<br/>
+
 
 3. **insertAtTail**<br/>
 Description: This method creates a new node and inserts at the ned of the tail.<br/>
 **Time Complexity:** <br/>
 Best case: O(N)<br/>
 Worst case: O(N)<br/>
-List all Operations implemented in your project using the above format.<br/>
+
 
 4. **insertAtPosition**<br/>
 Description: This method create a new node and inserts directly after the position found by<br/> searching the list for the position passed in by the method call.<br/> 
 **Time Complexity:** <br/> 
 Best case: O(N)<br/>
 Worst case: O(N)<br/>
-List all Operations implemented in your project using the above format.<br/>
+
 
 5. **deleteAtHead**<br/>
 Description: This method goes through the list to find the tail node to update it's next pointer to the new headNode, then deletes the old headNode.<br/>
 **Time Complexity:** <br/> 
 Best case: O(N)<br/>
 Worst case: O(N)<br/>
-List all Operations implemented in your project using the above format.<br/>
+
 
 6. **deleteAtTail**<br/>
 Description: This method travereses the list and finds the tail node, reassigns the preceeding node as the new tail, then deletes the existing node.<br/>
 **Time Complexity:** <br/> 
 Best case: O(N)<br/>
 Worst case: O(N)<br/>
-List all Operations implemented in your project using the above format.<br/>
+
 
 5. **deleteAtPosition**<br/>
 Description: This method travereses the list and finds the position to delete, reassigns the preceedings Node's next pointer, then deletes the positioned Node.<br/> 
 **Time Complexity:** <br/> 
 Best case: O(N)<br/>
 Worst case: O(N)<br/>
-List all Operations implemented in your project using the above format.<br/>
+
 
 6. **search** <br/>
 Description: This method travereses the list and finds the node associated with the value passed into the method call.<br/> 
 **Time Complexity:** <br/> 
 Best case: O(N)<br/>
 Worst case: O(N)<br/>
-List all Operations implemented in your project using the above format.<br/>
+
 
 7. **printList**<br/>
 Description: This method loops through the list and prints each node's data values.<br/> 
 **Time Complexity:** <br/> 
 Best case: O(N)<br/>
 Worst case: O(N)<br/>
-List all Operations implemented in your project using the above format.<br/>
+
 
 
 
