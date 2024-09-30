@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <vector>
+
 using namespace std;
 
 // Data class to store a string and an integer
@@ -54,6 +55,11 @@ public:
     string getColor()
     {
         return propertyColor;
+    }
+    
+    string getPropertyName()
+    {
+        return propertyName;
     }
 
     /**
@@ -296,9 +302,41 @@ public:
         //Basic Funtions
         void reverseCLList() {
             cout << "Reverse List unwritten" << endl;
-        } void sortCLList() {
-            cout << "Sort List unwritten" << endl;
         }
+    
+    void sortCLList() {
+        if(isListEmpty() or headNode -> nextNode == headNode)
+        {
+            return; // Nothing to sort or list only has one element
+        }
+        
+        bool swapped;
+        Node<T>* temp;
+        Node<T>* lastNode = nullptr;
+        
+        do {
+            swapped = false;
+            temp = headNode;
+            int cmp;
+            
+            // Traverse the circular list
+            while (temp -> nextNode != headNode && temp -> nextNode != lastNode)
+            {
+                cmp = strcmp(temp->data.getPropertyName().c_str(), temp->nextNode->data.getPropertyName().c_str());
+
+                if (cmp > 0)
+                {
+                    // Swap the data of the nodes if they are in the wrong order
+                    T tempData = temp -> data;
+                    temp -> data = temp -> nextNode -> data;
+                    temp -> nextNode -> data = tempData;
+                    swapped = true;
+                }
+                temp = temp -> nextNode;
+                lastNode = temp; // Reduce the range for sorting (bubble sort optimization)
+            }
+        } while (swapped);
+    }
     
     void printHeadNode() {
         if(isListEmpty())
@@ -345,7 +383,24 @@ public:
         //Optional Tasks
         // Advanced Functions
         void convertCLList() {
-            cout << "Convert Circular List Unwritten." << endl;
+
+            if(isListEmpty())
+            {
+                return; // Do nothing if list is empty
+            }
+            
+            // Handles a list with only one node
+            if(headNode -> nextNode == headNode)
+            {
+                headNode -> nextNode = nullptr;
+            }
+            
+            Node<T>* temp = headNode;
+            while(temp -> nextNode != headNode)
+            {
+                temp = temp -> nextNode; // Get the tail node
+            }
+            temp -> nextNode = nullptr; // Point the tail to null
         }
     
         void updateNodeValue(T objectValue, T newValue) {
@@ -378,11 +433,39 @@ public:
         }
     }
     
-    void mergeCLList() {
-            cout << "Merge Circular Linked List Unwritten" << endl;
+    void mergeCLList(CircularLinkedList<T> otherList) {
+        
+        Node<T>* temp1 = headNode;
+        Node<T>* temp2 = otherList.headNode;
+        
+        if(isListEmpty())
+        {
+            headNode = otherList.headNode;
         }
         
-    };
+        if(otherList.isListEmpty())
+        {
+            return; // Nothing in the other list to merge
+        }
+        
+        // Retrieve the tail of the first list
+        while( temp1 -> nextNode != headNode)
+        {
+            temp1 = temp1 -> nextNode;
+        }
+        
+        // Retrieve the tail of the second list
+        while( temp2 -> nextNode != otherList.headNode)
+        {
+            temp2 = temp2 -> nextNode;
+        }
+        
+        //First list tail points to the second list headNode
+        temp1 -> nextNode = otherList.headNode;
+        //Second list tail points to first list head
+        temp2 -> nextNode = headNode;
+    }
+};
 
         void sleepTime(int time)
         {
@@ -398,7 +481,7 @@ public:
         
         // Create a LinkedList of Data objects
         CircularLinkedList<MonopolyBoard> list;
-        
+        CircularLinkedList<MonopolyBoard> list2;
         // Create each node to be used and store inside a vector for easy access
         std::vector<MonopolyBoard> spots;
         spots.push_back(MonopolyBoard("Mediterranean Avenue", "Brown", 30, 2));
@@ -455,7 +538,7 @@ public:
         list.convertCLList();
         list.updateNodeValue(spots[1], spots[2]);
         list.displaySpecificColorNode("Pink");
-        list.mergeCLList();
+        list.mergeCLList(list2);
     
         
         //Prints a quick and easy to read checklist for TA to grade
@@ -478,7 +561,7 @@ public:
         sleepTime(printTime);
         cout << "   Basic Functions   " << endl
              << "[N] reverseCLList    " << endl
-             << "[N] sortCLList       " << endl
+             << "[Y] sortCLList       " << endl
              << "[Y] printHeadNode    " << endl
              << "[Y] printLastNode    " << endl
              << "[Y] isListEmpty      " << endl
@@ -486,17 +569,17 @@ public:
              << "                     " << endl;
         sleepTime(printTime);
         cout << "  Advanced Functions " << endl
-             << "[N] reverseCLList    " << endl
+             << "[Y] convertCLList    " << endl
              << "[Y] updateNodeVaue   " << endl
              << "[Y] displaySpecficColorNode   " << endl
-             << "[N] mergeCLList      " << endl;
+             << "[Y] mergeCLList      " << endl;
         sleepTime(printTime);
         cout << "                     " << endl
              << "  Extra Credit       " << endl
-             << "EC{1}:               " << endl
-             << "EC{2}:               " << endl
-             << "EC{3}:               " << endl
-             << "EC{4}:               " << endl;
+             << "EC{1}: Met Criteria  " << endl
+             << "EC{2}: Met Criteria  " << endl
+             << "EC{3}: Not Met       " << endl
+             << "EC{4}: Not Met       " << endl;
         
         return 0;
     }
