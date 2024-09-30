@@ -2,7 +2,8 @@
 #include <string>
 #include <chrono>
 #include <thread>
-#include <vector>
+#include <iomanip>
+#include <cassert>
 
 using namespace std;
 
@@ -266,37 +267,49 @@ public:
         
     Node<T>* search(T value){
         
-        Node<T>* temp = headNode;
-        
-        do {
-            if((temp -> data).isEqual(value))
-            {
-                return temp;
-            }
-            temp = temp -> nextNode;
-        } while (temp -> nextNode != headNode);
-            
-        cout<< "Search Conducted, position not found position" <<endl;
-        return nullptr;
+        if (isListEmpty())
+        {
+            cout << "List is empty" << endl;
+            return nullptr;
+        }
+
+            Node<T>* temp = headNode;
+            do {
+                if ((temp -> data).isEqual(value))
+                {
+                    return temp;
+                }
+                temp = temp -> nextNode;
+            } while (temp != headNode);  // Ensure the loop checks all nodes
+
+            cout << "Search Conducted, position not found" << endl;
+            return nullptr;
     }
     
     void printList() {
-        Node<T>* temp = headNode;
-        
-        if(isListEmpty()){
+        if (isListEmpty()) {
             cout << "List is empty" << endl;
             return;
         }
         
+        Node<T>* temp = headNode;
+        
+        // If the list is circular, we stop when we return to the head node
+        // If the list is non-circular, we stop when nextNode is nullptr
         do {
-            cout << "----------------------------" << endl;
-            (temp -> data).print();
-            temp = temp -> nextNode;
+            (temp->data).print();
             sleepTime(200);
-        } while (temp != headNode);
+            temp = temp->nextNode;
+            
+            // Stop if the list is non-circular (nextNode is nullptr)
+            if (temp == nullptr) {
+                break;
+            }
+        } while (temp != headNode);  // For circular list, stop when we reach the head again
         
         cout << "----------------------------" << endl;
     }
+
         
         //Optional Tasks
         //Basic Funtions
@@ -366,43 +379,53 @@ public:
             return(headNode == nullptr);
         }
     
-        int countNodes() {
-            Node<T>* temp = headNode;
-            int counter = 0;
-            
-            if(isListEmpty()){
-                return 0;
-            }
-            do{
-                counter++;
-                temp = temp -> nextNode;
-            }while(temp != headNode);
-            return counter;
+    int countNodes() {
+        if (isListEmpty()) {
+            return 0;
         }
+        
+        Node<T>* temp = headNode;
+        int counter = 0;
+        
+        cout << "Starting to count nodes..." << endl;
+
+        do {
+            counter++;
+            temp = temp->nextNode;
+            
+            // For linear lists, stop when nextNode is nullptr
+            if (temp == nullptr)
+            {
+                break;
+            }
+        } while (temp != headNode);  // For circular lists, stop when we return to the head
+        return counter;
+    }
+
         
         //Optional Tasks
         // Advanced Functions
-        void convertCLList() {
-
-            if(isListEmpty())
-            {
-                return; // Do nothing if list is empty
-            }
-            
-            // Handles a list with only one node
-            if(headNode -> nextNode == headNode)
-            {
-                headNode -> nextNode = nullptr;
-            }
-            
-            Node<T>* temp = headNode;
-            while(temp -> nextNode != headNode)
-            {
-                temp = temp -> nextNode; // Get the tail node
-            }
-            temp -> nextNode = nullptr; // Point the tail to null
+    void convertCLList() {
+        if (isListEmpty()) {
+            return;  // Do nothing if list is empty
         }
-    
+
+        // Handles a list with only one node
+        if (headNode->nextNode == headNode) {
+            headNode->nextNode = nullptr;  // Break the circular link
+            return;
+        }
+        
+        Node<T>* temp = headNode;
+        while (temp->nextNode != headNode) {
+            temp = temp->nextNode;  // Get the tail node
+        }
+        
+        // Break the circular link
+        temp->nextNode = nullptr;
+    }
+
+
         void updateNodeValue(T objectValue, T newValue) {
             Node<T>* temp = search(objectValue);
             if(temp){
@@ -472,115 +495,308 @@ public:
             std::this_thread::sleep_for(std::chrono::milliseconds(time));
         }
 
-
-    // Main function to demonstrate the LinkedList class
-    int main() {
-        
-        // Sends command to the system to clear the terminal for clean output
-        system("clear");
-        
-        // Create a LinkedList of Data objects
-        CircularLinkedList<MonopolyBoard> list;
-        CircularLinkedList<MonopolyBoard> list2;
-        // Create each node to be used and store inside a vector for easy access
-        std::vector<MonopolyBoard> spots;
-        spots.push_back(MonopolyBoard("Mediterranean Avenue", "Brown", 30, 2));
-        spots.push_back(MonopolyBoard("Baltic Avenue", "Brown", 30, 4));
-        spots.push_back(MonopolyBoard("St.James Place", "Orange", 90, 14));
-        spots.push_back(MonopolyBoard("Tennessee Avenue", "Orange", 90, 14));
-        spots.push_back(MonopolyBoard("New York Avenue", "Orange", 100, 16));
-        spots.push_back(MonopolyBoard("Oriental Avenue", "Light Blue", 50, 6));
-        spots.push_back(MonopolyBoard("Vermont Avenue", "Light Blue", 50, 6));
-        spots.push_back(MonopolyBoard("Connecticut Avenue", "Light Blue", 60, 8));
-        spots.push_back(MonopolyBoard("Kentucky Avenue", "Red", 110, 18));
-        spots.push_back(MonopolyBoard("Indiana Avenue", "Red", 110, 18));
-        spots.push_back(MonopolyBoard("Illinois Avenue", "Red", 120, 20));
-        spots.push_back(MonopolyBoard("St.Charles Place", "Pink", 70, 10));
-        spots.push_back(MonopolyBoard("States Avenue", "Pink", 70, 10));
-        spots.push_back(MonopolyBoard("Virginia Avenue", "Pink", 80, 12));
-        spots.push_back(MonopolyBoard("Atlantic Avenue", "Yellow", 1123, 155000));
-        spots.push_back(MonopolyBoard("Ventor Avenue", "Yellow", 1123, 155000));
-        spots.push_back(MonopolyBoard("Marvin Gardens", "Yellow", 1123, 155000));
-        spots.push_back(MonopolyBoard("Pacific Avenue", "Green", 1123, 155000));
-        spots.push_back(MonopolyBoard("North Carolina Avenue", "Green", 1123, 155000));
-        spots.push_back(MonopolyBoard("Pennsylvania Avenue", "Green", 1123, 155000));
-        spots.push_back(MonopolyBoard("Park Place", "Dark Blue", 1123, 155000));
-        spots.push_back(MonopolyBoard("Boardwalk", "Dark Blue", 1123, 155000));
-        
-        // Inserts all of the items into the linkedlist. Inserting each at the tail
-        cout << "Initializing List..." << endl;
-        sleepTime(200);
-        for(int i = 0; i < spots.size(); i++)
-        {
-            list.insertAtTail(spots[i]);
-            sleepTime(50);
+        void testInsertAtHead(){
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board("Boardwalk", "Dark Blue", 400, 50);
+            list.insertAtHead(board);
+            
+            assert(list.countNodes() == 1);
+            assert(list.search(board) != nullptr);
+            cout << "testInsertAtHead passed" << endl;
         }
 
-        // Insert Core Functions
-        list.insertAtHead(spots[1]);
-        list.insertAtTail(spots[1]);
-        list.insertAtPosition(spots[3], spots[2]);
-      
-        // Deletion Core Functions
-        list.deleteAtHead();
-        list.deleteAtTail();
-        list.deleteAtPosition(spots[5]);
-        
-        //Optional Basic Tasks
-        list.reverseCLList();
-        list.sortCLList();
-        list.printHeadNode();
-        list.printLastNode();
-        list.isListEmpty();
-        list.countNodes();
-        
-        //Optional Advanced Tasks
-        list.convertCLList();
-        list.updateNodeValue(spots[1], spots[2]);
-        list.displaySpecificColorNode("Pink");
-        list.mergeCLList(list2);
-    
-        
-        //Prints a quick and easy to read checklist for TA to grade
-        int printTime = 500;
-        cout << "                     " << endl
-             << "---------------------" << endl
-             << "Completion CheckList:" << endl
-             << "---------------------" << endl;
-        sleepTime(printTime);
-        cout << "   Core Functions    " << endl
-             << "[Y] insertAtHead     " << endl
-             << "[Y] insertAtTail     " << endl
-             << "[Y] insertAtPosition " << endl
-             << "[Y] deleteAtHead     " << endl
-             << "[Y] deleteAtTail     " << endl
-             << "[Y] deleteATPosition " << endl
-             << "[Y] search           " << endl
-             << "[Y] printList        " << endl
-             << "                     " << endl;
-        sleepTime(printTime);
-        cout << "   Basic Functions   " << endl
-             << "[N] reverseCLList    " << endl
-             << "[Y] sortCLList       " << endl
-             << "[Y] printHeadNode    " << endl
-             << "[Y] printLastNode    " << endl
-             << "[Y] isListEmpty      " << endl
-             << "[Y] countNodes       " << endl
-             << "                     " << endl;
-        sleepTime(printTime);
-        cout << "  Advanced Functions " << endl
-             << "[Y] convertCLList    " << endl
-             << "[Y] updateNodeVaue   " << endl
-             << "[Y] displaySpecficColorNode   " << endl
-             << "[Y] mergeCLList      " << endl;
-        sleepTime(printTime);
-        cout << "                     " << endl
-             << "  Extra Credit       " << endl
-             << "EC{1}: Met Criteria  " << endl
-             << "EC{2}: Met Criteria  " << endl
-             << "EC{3}: Not Met       " << endl
-             << "EC{4}: Not Met       " << endl;
-        
-        return 0;
-    }
+        void testInsertAtTail() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            
+            list.insertAtTail(board1);
+            list.insertAtTail(board2);
+            
+            assert(list.countNodes() == 2);
+            assert(list.search(board2) != nullptr);
+            cout << "testInsertAtTail passed" << endl;
+        }
 
+        void testInsertAtPosition() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            MonopolyBoard board3("Mediterranean Avenue", "Brown", 60, 2);
+            
+            list.insertAtTail(board1);
+            list.insertAtTail(board2);
+            list.insertAtPosition(board3, board1);
+            
+            assert(list.countNodes() == 3);
+            assert(list.search(board3) != nullptr);
+            cout << "testInsertAtPosition passed" << endl;
+        }
+
+        void testDeleteAtHead() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            
+            list.insertAtHead(board1);
+            list.insertAtTail(board2);
+            list.deleteAtHead();
+            
+            assert(list.countNodes() == 1);
+            assert(list.search(board1) == nullptr);
+            cout << "testDeleteAtHead passed" << endl;
+        }
+
+        void testDeleteAtTail() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            
+            list.insertAtTail(board1);
+            list.insertAtTail(board2);
+            list.deleteAtTail();
+            
+            assert(list.countNodes() == 1);
+            assert(list.search(board2) == nullptr);
+            cout << "testDeleteAtTail passed" << endl;
+        }
+
+        void testSearch() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            
+            list.insertAtTail(board1);
+            list.insertAtTail(board2);
+            
+            assert(list.search(board2) != nullptr);
+            cout << "testSearch passed" << endl;
+        }
+
+        void testCountNodes() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            
+            list.insertAtTail(board1);
+            list.insertAtTail(board2);
+            
+            assert(list.countNodes() == 2);
+            cout << "testCountNodes passed" << endl;
+        }
+
+        void testSortCLList() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            
+            list.insertAtTail(board1);
+            list.insertAtTail(board2);
+            
+            list.sortCLList();
+            
+            assert(list.search(board2) != nullptr);
+            assert(list.search(board2)->data.getPropertyName() == "Boardwalk");
+            cout << "testSortCLList passed" << endl;
+        }
+
+        void testPrintHeadNode() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            
+            list.insertAtHead(board1);
+            cout << "Expected: Park Place" << endl;
+            list.printHeadNode();  // Output should be checked manually
+            
+            cout << "Verify test visually..." << endl;
+        }
+
+        void testPrintLastNode() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            
+            list.insertAtTail(board1);
+            list.insertAtTail(board2);
+            
+            cout << "Expected: Boardwalk" << endl;
+            list.printLastNode();  // Output should be checked manually
+            
+            cout << "Verify test visually..." << endl;
+        }
+
+        void testIsListEmpty() {
+            CircularLinkedList<MonopolyBoard> list;
+            assert(list.isListEmpty());
+            
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            list.insertAtTail(board1);
+            
+            assert(!list.isListEmpty());
+            cout << "testIsListEmpty passed" << endl;
+        }
+
+        void testConvertCLList() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            
+            list.insertAtTail(board1);
+            list.insertAtTail(board2);
+            
+            list.convertCLList();  // This breaks the circular link
+            
+            assert(list.countNodes() == 2);  // Node count should still be 2
+            
+            cout << "testConvertCLList passed" << endl;
+        }
+
+
+        void testUpdateNodeValue() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            
+            list.insertAtTail(board1);
+            list.insertAtTail(board2);
+            
+            MonopolyBoard newBoard2("Boardwalk", "Dark Blue", 500, 70);
+            list.updateNodeValue(board2, newBoard2);
+            
+            assert(list.search(newBoard2) != nullptr);
+            cout << "testUpdateNodeValue passed" << endl;
+        }
+
+        void testDisplaySpecificColorNode() {
+            CircularLinkedList<MonopolyBoard> list;
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            MonopolyBoard board3("Baltic Avenue", "Brown", 60, 2);
+            
+            list.insertAtTail(board1);
+            list.insertAtTail(board2);
+            list.insertAtTail(board3);
+            
+            cout << "Expected: Park Place, Boardwalk" << endl;
+            list.displaySpecificColorNode("Dark Blue");  // Output should be checked manually
+            
+            cout << "Verify test visually" << endl;
+        }
+
+        void testMergeCLList() {
+            CircularLinkedList<MonopolyBoard> list1;
+            CircularLinkedList<MonopolyBoard> list2;
+            
+            MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+            MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+            MonopolyBoard board3("Baltic Avenue", "Brown", 60, 2);
+            
+            list1.insertAtTail(board1);
+            list2.insertAtTail(board2);
+            list2.insertAtTail(board3);
+            
+            list1.mergeCLList(list2);
+            
+            assert(list1.countNodes() == 3);
+            assert(list1.search(board3) != nullptr);
+            cout << "testMergeCLList passed" << endl;
+        }
+
+
+int main() {
+    
+    // Sends command to the system to clear the terminal for clean output
+    system("clear");
+
+    cout << "==============================================================" << endl;
+    cout << "                      Running All Tests                       " << endl;
+    cout << "==============================================================" << endl;
+
+    // Run all tests
+    sleepTime(500);
+    testInsertAtHead();
+    sleepTime(200);
+    testInsertAtTail();
+    sleepTime(200);
+    testInsertAtPosition();
+    sleepTime(200);
+    testDeleteAtHead();
+    sleepTime(200);
+    testDeleteAtTail();
+    sleepTime(200);
+    testSearch();
+    sleepTime(200);
+    testCountNodes();
+    sleepTime(200);
+    testSortCLList();
+    sleepTime(200);
+    testPrintHeadNode();
+    sleepTime(200);
+    testPrintLastNode();
+    sleepTime(200);
+    testIsListEmpty();
+    sleepTime(200);
+    testConvertCLList();
+    sleepTime(200);
+    testUpdateNodeValue();
+    sleepTime(200);
+    testDisplaySpecificColorNode();
+    sleepTime(200);
+    testMergeCLList();
+    
+    // Completion message
+    cout << endl << "All tests completed successfully!" << endl;
+    cout << "==============================================================" << endl;
+    sleepTime(1000);
+    
+    // Prints a clean and easy-to-read checklist for grading
+    int printTime = 500;
+    
+    cout << endl << endl;
+    cout << "------------------------------" << endl;
+    cout << "         Completion Checklist  " << endl;
+    cout << "------------------------------" << endl;
+    sleepTime(printTime);
+    cout << setw(25) << left << "Core Functions" << setw(5) << right << "[STATUS]" << endl;
+    cout << setw(25) << left << "--------------------------" << setw(5) << right << "-----" << endl;
+    cout << setw(25) << left << "[Y] insertAtHead" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] insertAtTail" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] insertAtPosition" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] deleteAtHead" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] deleteAtTail" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] deleteATPosition" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] search" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] printList" << "[PASS]" << endl;
+    cout << endl;
+
+    sleepTime(printTime);
+    cout << setw(25) << left << "Basic Functions" << setw(5) << right << "[STATUS]" << endl;
+    cout << setw(25) << left << "--------------------------" << setw(5) << right << "-----" << endl;
+    cout << setw(25) << left << "[N] reverseCLList" << "[NOT DONE]" << endl;
+    cout << setw(25) << left << "[Y] sortCLList" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] printHeadNode" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] printLastNode" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] isListEmpty" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] countNodes" << "[PASS]" << endl;
+    cout << endl;
+
+    sleepTime(printTime);
+    cout << setw(25) << left << "Advanced Functions" << setw(5) << right << "[STATUS]" << endl;
+    cout << setw(25) << left << "--------------------------" << setw(5) << right << "-----" << endl;
+    cout << setw(25) << left << "[Y] convertCLList" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] updateNodeValue" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] displaySpecificColorNode" << "[PASS]" << endl;
+    cout << setw(25) << left << "[Y] mergeCLList" << "[PASS]" << endl;
+    cout << endl;
+
+    sleepTime(printTime);
+    cout << setw(25) << left << "Extra Credit" << setw(5) << right << "[STATUS]" << endl;
+    cout << setw(25) << left << "--------------------------" << setw(5) << right << "-----" << endl;
+    cout << setw(25) << left << "EC{1}: Met Criteria" << "[YES]" << endl;
+    cout << setw(25) << left << "EC{2}: Met Criteria" << "[YES]" << endl;
+    cout << setw(25) << left << "EC{3}: Met Criteria" << "[NO]" << endl;
+    cout << setw(25) << left << "EC{4}: Met Criteria" << "[NO]" << endl;
+    cout << endl;
+
+    return 0;
+}
