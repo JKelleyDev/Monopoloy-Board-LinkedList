@@ -19,64 +19,82 @@ executed from your local terminal.
 - Finally run your file with the following command 
     :./filename.exe
   
-## Operations
-1. **insertAtHead**<br/>
-Description: This method creates a new node and inserts at the beginning of the list. The method must traverse the entire list to find the tail node to update the next pointer. <br/>
-**Time Complexity:** <br/>
-Best case: O(N)<br/>
-Worst case: O(N)<br/>
+## Operations and Time Complexities
 
+### insertAtHead
+**Description:**  
+Inserts a node at the beginning of the list. To complete the operation, the method has to traverse the entire list to find the tail node and update its `nextNode` pointer.  
 
-3. **insertAtTail**<br/>
-Description: This method creates a new node and inserts at the ned of the tail.<br/>
-**Time Complexity:** <br/>
-Best case: O(N)<br/>
-Worst case: O(N)<br/>
+**Time Complexity:**  
+- **Best case:** O(N) — because even in the best case, the tail node has to be found to correctly link the list to the new head.  
+- **Worst case:** O(N) — same as the best case, since traversal of the list to update the tail pointer is necessary.  
 
+---
 
-4. **insertAtPosition**<br/>
-Description: This method create a new node and inserts directly after the position found by<br/> searching the list for the position passed in by the method call.<br/> 
-**Time Complexity:** <br/> 
-Best case: O(N)<br/>
-Worst case: O(N)<br/>
+### `insertAtTail`
+**Description:**  
+Inserts a new node at the end of the list. The method traverses the list to find the tail node and then appends the new node.  
 
+**Time Complexity:**  
+- **Best case:** `O(N)` — regardless of the input size, traversal is required to find the last node.  
+- **Worst case:** `O(N)` — same as the best case, because of the full list traversal.  
 
-5. **deleteAtHead**<br/>
-Description: This method goes through the list to find the tail node to update it's next pointer to the new headNode, then deletes the old headNode.<br/>
-**Time Complexity:** <br/> 
-Best case: O(N)<br/>
-Worst case: O(N)<br/>
+---
 
+### `insertAtPosition`
+**Description:**  
+Inserts a new node after a given position by searching through the list for the specified position.  
 
-6. **deleteAtTail**<br/>
-Description: This method travereses the list and finds the tail node, reassigns the preceeding node as the new tail, then deletes the existing node.<br/>
-**Time Complexity:** <br/> 
-Best case: O(N)<br/>
-Worst case: O(N)<br/>
+**Time Complexity:**  
+- **Best case:** `O(N)` — even in the best scenario, the list must be searched to find the position, so it depends on the list length.  
+- **Worst case:** `O(N)` — same as the best case, since traversal is required to locate the position.  
 
+---
 
-5. **deleteAtPosition**<br/>
-Description: This method travereses the list and finds the position to delete, reassigns the preceedings Node's next pointer, then deletes the positioned Node.<br/> 
-**Time Complexity:** <br/> 
-Best case: O(N)<br/>
-Worst case: O(N)<br/>
+### `deleteAtHead`
+**Description:**  
+Deletes the head node and reassigns the new head. The method traverses the entire list to find the tail node and updates its `nextNode` pointer to the new head.  
 
+**Time Complexity:**  
+- **Best case:** `O(N)` — finding the tail node requires traversal of the list.  
+- **Worst case:** `O(N)` — same as the best case, since the traversal is necessary.  
 
-6. **search** <br/>
-Description: This method travereses the list and finds the node associated with the value passed into the method call.<br/> 
-**Time Complexity:** <br/> 
-Best case: O(N)<br/>
-Worst case: O(N)<br/>
+---
 
+### `deleteAtTail`
+**Description:**  
+Deletes the last node in the list, requiring traversal to find the tail and update the second-to-last node's pointer to become the new tail.  
 
-7. **printList**<br/>
-Description: This method loops through the list and prints each node's data values.<br/> 
-**Time Complexity:** <br/> 
-Best case: O(N)<br/>
-Worst case: O(N)<br/>
+**Time Complexity:**  
+- **Best case:** `O(N)` — traversal to find the tail node is required.  
+- **Worst case:** `O(N)` — same as the best case, because traversal through the list is unavoidable.  
 
+---
 
+### `deleteAtPosition`
+**Description:**  
+Deletes a node at a specified position by searching for that position and updating the preceding node’s pointer.  
 
+**Time Complexity:**  
+- **Best case:** `O(N)` — traversal to locate the position is needed in all cases.  
+- **Worst case:** `O(N)` — same as the best case, since finding the node requires traversing the list.  
 
+---
 
+### `search`
+**Description:**  
+Searches for a node containing a value by traversing the list.  
 
+**Time Complexity:**  
+- **Best case:** `O(N)` — even in the best case, the entire list may need to be traversed to find the value.  
+- **Worst case:** `O(N)` — same as the best case, since traversal through the list is required to perform the search.  
+
+---
+
+### `printList`
+**Description:**  
+Loops through the entire list to print each node’s data.  
+
+**Time Complexity:**  
+- **Best case:** `O(N)` — all nodes need to be traversed to print the list.  
+- **Worst case:** `O(N)` — same as the best case, because each node must be printed in both cases.  
