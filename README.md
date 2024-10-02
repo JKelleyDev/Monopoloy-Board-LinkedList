@@ -21,13 +21,13 @@ executed from your local terminal.
   
 ## Operations and Time Complexities
 
-### 'insertAtHead'
+### `insertAtHead`
 **Description:**  
 Inserts a node at the beginning of the list. To complete the operation, the method has to traverse the entire list to find the tail node and update its `nextNode` pointer.  
 
 **Time Complexity:**  
-- **Best case:** 'O(N)' — because even in the best case, the tail node has to be found to correctly link the list to the new head.  
-- **Worst case:** 'O(N)' — same as the best case, since traversal of the list to update the tail pointer is necessary.  
+- **Best case:** `O(N)` — because even in the best case, the tail node has to be found to correctly link the list to the new head.  
+- **Worst case:** `O(N)` — same as the best case, since traversal of the list to update the tail pointer is necessary.  
 
 ---
 
