@@ -346,11 +346,42 @@ public:
     }
 
         
-        //Optional Tasks
-        //Basic Funtions
+        
+    /**
+        Purpose: reverses the order of the linked list
+     */
     void reverseCLList() {
-        cout << "Reverse List unwritten" << endl;
+        
+        if (isListEmpty()) {
+            return;
+        }
+        
+        Node<T>* prevNode = nullptr;
+        Node<T>* currentNode = headNode;
+        Node<T>* nextNode = nullptr;
+        
+        // track the head node's next to detect the loop.
+        Node<T>* initialHead = headNode;
+        
+        do {
+            // Store next node
+            nextNode = currentNode -> nextNode;
+            
+            // Reverse current node's next pointer
+            currentNode -> nextNode = prevNode;
+            
+            // Move prev and curremt one step forward
+            prevNode = currentNode;
+            currentNode = nextNode;
+        } while (currentNode != initialHead);
+        
+        // After the loop, prevNode is new head
+        // point the original head's nextNode to prevNode
+        headNode -> nextNode = prevNode;
+        
+        headNode = prevNode;
     }
+
     
     /**
         Purpose: Sorts the linked list in alphabetic order of property names (from head to tail)
@@ -777,6 +808,34 @@ void testMergeCLList() {
     cout << "testMergeCLList passed" << endl;
 }
 
+void testReverseCLList() {
+    CircularLinkedList<MonopolyBoard> list;
+    
+    // Create some MonopolyBoard objects to test
+    MonopolyBoard board1("Park Place", "Dark Blue", 350, 35);
+    MonopolyBoard board2("Boardwalk", "Dark Blue", 400, 50);
+    MonopolyBoard board3("Baltic Avenue", "Brown", 60, 2);
+
+    // Insert boards into the list
+    list.insertAtTail(board1);
+    list.insertAtTail(board2);
+    list.insertAtTail(board3);
+
+    // Reverse the list
+    list.reverseCLList();
+
+    // Check if the first node is now Baltic Avenue
+    assert(list.search(board3) != nullptr);
+    
+    // Check if the last node is now Park Place
+    Node<MonopolyBoard>* temp = list.search(board1);
+    assert(temp != nullptr);
+    assert(temp->nextNode == list.search(board3));  // Check if Park Place now points to Baltic Avenue
+    
+    cout << "testReverseCLList passed" << endl;
+}
+
+
 
 int main() {
     
@@ -845,7 +904,7 @@ int main() {
     sleepTime(printTime);
     cout << setw(25) << left << "Basic Functions" << setw(5) << right << "[STATUS]" << endl;
     cout << setw(25) << left << "--------------------------" << setw(5) << right << "-----" << endl;
-    cout << setw(25) << left << "[N] reverseCLList" << "[NOT DONE]" << endl;
+    cout << setw(25) << left << "[Y] reverseCLList" << "[PASS]" << endl;
     cout << setw(25) << left << "[Y] sortCLList" << "[PASS]" << endl;
     cout << setw(25) << left << "[Y] printHeadNode" << "[PASS]" << endl;
     cout << setw(25) << left << "[Y] printLastNode" << "[PASS]" << endl;
@@ -867,7 +926,7 @@ int main() {
     cout << setw(25) << left << "--------------------------" << setw(5) << right << "-----" << endl;
     cout << setw(25) << left << "EC{1}: Met Criteria" << "[YES]" << endl;
     cout << setw(25) << left << "EC{2}: Met Criteria" << "[YES]" << endl;
-    cout << setw(25) << left << "EC{3}: Met Criteria" << "[NO]" << endl;
+    cout << setw(25) << left << "EC{3}: Met Criteria" << "[YES]" << endl;
     cout << endl;
 
     return 0;
